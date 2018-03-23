@@ -91,6 +91,24 @@ router.post('/messages', function(req, res) {
     });
 });
 
+function buildApiDefinition() {
+    return [
+        'GET /api/greetings',
+        'GET /api/clipboard?title=myClipboard',
+        "POST /api/clipboard {'title': 'myClipboard', 'text': 'some text'}",
+        'GET /api/messages',
+        "POST /api/messages {'content': 'my message'}"
+    ];
+}
+
+router.get('/', function(req, res) {
+    res.json({apiEndpoints: buildApiDefinition()});
+});
+
+app.get('/', function(req, res) {
+    res.json({apiEndpoints: buildApiDefinition()});
+});
+
 app.use(allowCrossDomain);
 app.use('/api', router);
 app.listen(port);
